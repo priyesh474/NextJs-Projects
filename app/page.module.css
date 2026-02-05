@@ -1,0 +1,238 @@
+.pageShell {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 20px 16px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.hero {
+  position: relative;
+  border-radius: 18px;
+  padding: 32px 28px;
+  color: #fff;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.1)),
+    url("https://images.unsplash.com/photo-1436491911682-72ab1d398f59?auto=format&fit=crop&w=1600&q=80")
+      center/cover no-repeat;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.18);
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+body.dark .hero {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.3)),
+    url("https://images.unsplash.com/photo-1436491911682-72ab1d398f59?auto=format&fit=crop&w=1600&q=80")
+      center/cover no-repeat;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.5);
+}
+
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  color: #4c4c4c;
+  font-weight: 700;
+  font-size: 0.9rem;
+  width: fit-content;
+}
+
+.heroTitle {
+  margin: 0;
+  font-size: 2.6rem;
+  letter-spacing: -0.5px;
+  text-shadow: 0 8px 26px rgba(0, 0, 0, 0.25);
+}
+
+.heroSubtitle {
+  margin: 0;
+  font-size: 1.05rem;
+  opacity: 0.92;
+}
+
+.heroActions {
+  display: flex;
+  gap: 10px;
+  margin-top: 4px;
+  flex-wrap: wrap;
+}
+
+.meta {
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.controlsSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filtersLabel {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.categoryPills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: #f7f7f9;
+  color: #444;
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+body.dark .pill {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: #1e1e1e;
+  color: #e0e0e0;
+}
+
+.pillActive {
+  background: #5b3f8c;
+  color: #fff;
+  border-color: rgba(91, 63, 140, 0.7);
+  box-shadow: 0 8px 18px rgba(91, 63, 140, 0.24);
+}
+
+body.dark .pillActive {
+  background: linear-gradient(135deg, #a78bfa 0%, #c084fc 100%);
+  border-color: rgba(167, 139, 250, 0.5);
+  box-shadow: 0 8px 18px rgba(167, 139, 250, 0.3);
+}
+
+.pill:hover:not(.pillActive) {
+  border-color: rgba(0, 0, 0, 0.16);
+  background: #ececef;
+}
+
+body.dark .pill:hover:not(.pillActive) {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: #2a2a2a;
+}
+
+.searchBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f4f4f6;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 8px 10px 8px 14px;
+  min-width: 260px;
+  transition: all 0.2s ease;
+}
+
+body.dark .searchBar {
+  background: #1e1e1e;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.searchBar input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 0.98rem;
+  color: var(--text);
+}
+
+.searchBar input::placeholder {
+  color: var(--text);
+  opacity: 0.5;
+}
+
+.searchBtn {
+  border: none;
+  /* background: #764ba2; */
+  color: #fff;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  /* box-shadow: 0 8px 18px rgba(118, 75, 162, 0.28); */
+}
+/* 
+.searchBtn:hover {
+  transform: translateY(-1px);
+} */
+
+.gridSection {
+  margin-top: 4px;
+}
+
+.emptyState {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 48px 24px;
+  color: var(--text);
+  opacity: 0.6;
+}
+
+body.dark .emptyState {
+  opacity: 0.7;
+}
+body.dark .searchBar {
+  background: #ffffffcf;
+}
+
+
+.emptyState p {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    min-height: 200px;
+  }
+  .heroTitle {
+    font-size: 1.7rem;
+  }
+  .heroSubtitle{
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .controlsSection {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .searchBar {
+    width: 100%;
+    max-width: -webkit-fill-available;
+  }
+}

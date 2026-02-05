@@ -1,0 +1,214 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: var(--bg);
+  border-radius: 16px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+:global(body.dark) .card {
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+:global(body.dark) .card:hover {
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+  border-color: rgba(167, 139, 250, 0.25);
+}
+
+.imageWrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  aspect-ratio: 16 / 9;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f1 100%);
+}
+
+:global(body.dark) .imageWrap {
+  background: linear-gradient(135deg, #1f1f2b 0%, #14141d 100%);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .image {
+  transform: scale(1.03);
+}
+
+.badge {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(102, 126, 234, 0.9);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  box-shadow: 0 6px 14px rgba(102, 126, 234, 0.35);
+}
+
+:global(body.dark) .badge {
+  background: rgba(167, 139, 250, 0.9);
+  box-shadow: 0 6px 14px rgba(167, 139, 250, 0.35);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.35;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+/* ================= BUTTON BASE ================= */
+
+.linkPrimary,
+.linkGhost,
+.dangerBtn {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease,
+    border-color 0.2s ease, color 0.2s ease;
+}
+
+/* ================= PRIMARY ================= */
+
+.linkPrimary {
+  color: #fff;
+  background: linear-gradient(135deg, #8f8f8f 0%, #171717 100%);
+  box-shadow: 0 8px 20px rgba(102, 126, 234, 0.25);
+}
+
+.card .linkPrimary {
+  background: #667eea0f;
+  color: #000;
+  border: 1px solid #0000;
+  box-shadow: none;
+  font-weight: 400;
+}
+
+:global(body.dark) .card .linkPrimary {
+  background: rgba(167, 139, 250, 0.12);
+  color: #e0e0e0;
+}
+
+.linkPrimary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(102, 126, 234, 0.35);
+}
+
+/* ================= GHOST ================= */
+
+.card .linkGhost {
+  background: #667eea0f;
+  color: #000;
+  border: 1px solid #0000;
+  box-shadow: none;
+  font-weight: 400;
+}
+
+:global(body.dark) .card .linkGhost {
+  background: rgba(167, 139, 250, 0.12);
+  color: #e0e0e0;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.linkGhost {
+  color: var(--text);
+  border-color: rgba(0, 0, 0, 0.08);
+  background: rgba(102, 126, 234, 0.06);
+}
+
+:global(body.dark) .linkGhost {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(167, 139, 250, 0.08);
+}
+
+.linkGhost:hover {
+  border-color: rgba(102, 126, 234, 0.3);
+  background: rgba(102, 126, 234, 0.12);
+  transform: translateY(-1px);
+}
+
+:global(body.dark) .linkGhost:hover {
+  border-color: rgba(167, 139, 250, 0.3);
+  background: rgba(167, 139, 250, 0.15);
+}
+
+/* ================= DANGER ================= */
+
+.dangerBtn {
+  color: #fff;
+  background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+  border: none;
+  box-shadow: 0 8px 20px rgba(245, 101, 101, 0.2);
+}
+
+.card .dangerBtn {
+  background: #667eea0f;
+  color: #000;
+  border: 1px solid #0000;
+  box-shadow: none;
+  font-weight: 400;
+}
+
+:global(body.dark) .card .dangerBtn {
+  background: rgba(245, 101, 101, 0.15);
+  color: #ffb3b3;
+  box-shadow: none;
+}
+
+.dangerBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 24px rgba(229, 62, 62, 0.28);
+}
+
+/* ================= ACTIVE ================= */
+
+.dangerBtn:active,
+.linkPrimary:active,
+.linkGhost:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 640px) {
+  .actions {
+    grid-template-columns: 1fr;
+  }
+}

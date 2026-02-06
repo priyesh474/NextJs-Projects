@@ -142,34 +142,43 @@ export default function BlogForm({ blogId }) {
 
   const uploadLocalImage = async (file) => {
     if (!file) return;
-    setToast("");
+  
     setUploading(true);
-
-    // local preview (instant)
+    setToast("");
+  
     const previewUrl = URL.createObjectURL(file);
     setLocalPreview(previewUrl);
-
+  
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body: formData,
-      });
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.error || "Upload failed");
-
-      setForm((prev) => ({ ...prev, image: data.imageUrl }));
-      setToast("Image uploaded");
+      const fileExt = file.name.split(".").pop();
+      const fileName = `${Date.now()}.${fileExt}`;
+      const filePath = `covers/${fileName}`;
+  
+      const { error: uploadError } = await supabase.storage
+        .from("blog-images")
+        .upload(filePath, file);
+  
+      if (uploadError) throw uploadError;
+  
+      const { data } = supabase.storage
+        .from("blog-images")
+        .getPublicUrl(filePath);
+  
+      setForm((prev) => ({
+        ...prev,
+        image: data.publicUrl,
+      }));
+  
+      setToast("Image uploaded successfully");
     } catch (err) {
-      setToast(err?.message || "Upload failed");
+      console.error(err);
+      setToast("Image upload failed");
       setForm((prev) => ({ ...prev, image: "" }));
     } finally {
       setUploading(false);
     }
   };
+  
 
   return (
     <>

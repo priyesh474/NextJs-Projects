@@ -1,14 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./BlogCard.module.css";
-// import api from "../../services/api";
 import { supabase } from "@/lib/supabase";
 export default function BlogCard({ blog, onDelete }) {
   console.log(supabase);
-  // const handleDelete = async () => {
-  //   await api.delete(`/posts/${Number(blog.id)}`);
-  //   onDelete(blog.id);
-  // };
+
 
   const handleDelete = async () => {
     await supabase.from("posts").delete().eq("id", blog.id);

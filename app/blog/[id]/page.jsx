@@ -12,12 +12,6 @@ export default function BlogDetail() {
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // useEffect(() => {
-  //   if (!id) return;
-  //   api.get(`/posts/${Number(id)}`)
-  //     .then((res) => setBlog(res.data))
-  //     .finally(() => setLoading(false));
-  // }, [id]);
 
   useEffect(() => {
     if (!id) return;

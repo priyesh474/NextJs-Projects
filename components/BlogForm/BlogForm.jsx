@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-// import api from "../../services/api";
 import Toast from "../Toast/Toast";
 import { useRouter } from "next/navigation";
 import styles from "./BlogForm.module.css";
@@ -22,12 +21,6 @@ export default function BlogForm({ blogId }) {
   const [localPreview, setLocalPreview] = useState("");
   const [errors, setErrors] = useState({});
 
-
-  // useEffect(() => {
-  //   if (blogId) {
-  //     api.get(`/posts/${Number(blogId)}`).then(res => setForm(res.data));
-  //   }
-  // }, [blogId]);
 
   useEffect(() => {
     if (!blogId) return;
@@ -101,42 +94,6 @@ export default function BlogForm({ blogId }) {
   };
   
 
-  // const submitHandler = async (e) => {
-  //   e.preventDefault();
-  
-  //   if (!validateForm()) return;
-  
-  //   setSaving(true);
-  
-  //   // ✅ DEFINE PAYLOAD (THIS WAS MISSING)
-  //   const payload = {
-  //     title: form.title,
-  //     image: form.image,
-  //     category: form.category,
-  //     content: form.content,
-  //   };
-  
-  //   try {
-  //     if (blogId) {
-  //       // UPDATE
-  //       await api.put(`/posts/${Number(blogId)}`, {
-  //         ...payload,
-  //         id: Number(blogId),
-  //       });
-  //     } else {
-  //       // CREATE (🚨 DO NOT SEND ID)
-  //       await api.post("/posts", payload);
-  //     }
-  
-  //     setToast(blogId ? "Blog Updated" : "Blog Added");
-  
-  //     setTimeout(() => {
-  //       router.push("/");
-  //     }, 800);
-  //   } finally {
-  //     setSaving(false);
-  //   }
-  // };
   
   
   const submitHandler = async (e) => {

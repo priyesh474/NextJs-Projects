@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useMemo, useState, startTransition } from "react";
-// import api from "../services/api";
 import BlogCard from "../components/BlogCard/BlogCard";
 import Pagination from "../components/Pagination/Pagination";
 import styles from "./page.module.css";

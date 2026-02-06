@@ -4,6 +4,12 @@
   padding: 24px 16px;
 }
 
+body.dark .shell{
+  border: 1px solid #cccccc5e !important;
+    border-radius: 10px !important;
+}
+
+
 .card {
   background: var(--bg);
   color: var(--text);

@@ -1,17 +1,17 @@
 {
   "posts": [
     {
-      "id": "1",
       "title": "Getting Started with Next.js",
       "image": "/uploads/blog-images/1768987464459-blog-default.png",
       "category": "Next.js",
-      "content": "Next.js is a powerful React framework that enables server-side rendering, static site generation, and API routes. This guide helps beginners understand the basics and set up their first project step by step."
+      "content": "Next.js is a powerful React framework that enables server-side rendering, static site generation, and API routes. This guide helps beginners understand the basics and set up their first project step by step.",
+      "id": "1"
     },
     {
-      "title": "Understanding React Hooks",
+      "title": "Understanding React Hooks 1",
       "image": "/uploads/blog-images/1769512726086-banner.webp",
-      "category": "React",
-      "content": "React Hooks allow you to use state and other React features without writing a class. Hooks like useState, useEffect, and useContext simplify logic and improve code readability.",
+      "category": "React 1",
+      "content": "React Hooks allow you to use state and other React features without writing a class. Hooks like useState, useEffect, and useContext simplify logic and improve code readability. 1",
       "id": "2"
     },
     {

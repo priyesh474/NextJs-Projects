@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState, startTransition } from "react";
-import api from "../services/api";
+// import api from "../services/api";
 import BlogCard from "../components/BlogCard/BlogCard";
 import Pagination from "../components/Pagination/Pagination";
 import styles from "./page.module.css";
+import { supabase } from "@/lib/supabase";
 
 export default function Home() {
   const [blogs, setBlogs] = useState([]);
@@ -14,8 +15,20 @@ export default function Home() {
   const itemsPerPage = 6;
 
   useEffect(() => {
-    api.get("/posts").then((res) => setBlogs(res.data));
+    const fetchBlogs = async () => {
+      const { data, error } = await supabase
+        .from("posts")
+        .select("*")
+        .order("created_at", { ascending: false });
+  
+      if (!error) {
+        setBlogs(data || []);
+      }
+    };
+  
+    fetchBlogs();
   }, []);
+  
 
   const deleteFromUI = (id) => {
     setBlogs((prev) => prev.filter((b) => b.id !== id));

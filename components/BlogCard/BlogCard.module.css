@@ -207,8 +207,8 @@
 
 /* ================= RESPONSIVE ================= */
 
-@media (max-width: 640px) {
+/* @media (max-width: 640px) {
   .actions {
     grid-template-columns: 1fr;
   }
-}
+} */

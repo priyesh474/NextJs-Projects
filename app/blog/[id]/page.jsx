@@ -3,20 +3,42 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
-import api from "../../../services/api";
+// import api from "../../../services/api";
 import styles from "./page.module.css";
+import { supabase } from "@/lib/supabase";
 
 export default function BlogDetail() {
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // useEffect(() => {
+  //   if (!id) return;
+  //   api.get(`/posts/${Number(id)}`)
+  //     .then((res) => setBlog(res.data))
+  //     .finally(() => setLoading(false));
+  // }, [id]);
+
   useEffect(() => {
     if (!id) return;
-    api.get(`/posts/${Number(id)}`)
-      .then((res) => setBlog(res.data))
-      .finally(() => setLoading(false));
+  
+    const fetchBlog = async () => {
+      const { data, error } = await supabase
+        .from("posts")
+        .select("*")
+        .eq("id", id)
+        .single();
+  
+      if (!error) {
+        setBlog(data);
+      }
+  
+      setLoading(false);
+    };
+  
+    fetchBlog();
   }, [id]);
+  
 
   const imageSrc =
     blog?.image &&

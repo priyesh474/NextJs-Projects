@@ -1,10 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import api from "../../services/api";
+// import api from "../../services/api";
 import Toast from "../Toast/Toast";
 import { useRouter } from "next/navigation";
 import styles from "./BlogForm.module.css";
+import { supabase } from "@/lib/supabase";
+
 
 export default function BlogForm({ blogId }) {
   const router = useRouter();
@@ -21,11 +23,35 @@ export default function BlogForm({ blogId }) {
   const [errors, setErrors] = useState({});
 
 
+  // useEffect(() => {
+  //   if (blogId) {
+  //     api.get(`/posts/${Number(blogId)}`).then(res => setForm(res.data));
+  //   }
+  // }, [blogId]);
+
   useEffect(() => {
-    if (blogId) {
-      api.get(`/posts/${Number(blogId)}`).then(res => setForm(res.data));
-    }
+    if (!blogId) return;
+  
+    const fetchBlog = async () => {
+      const { data } = await supabase
+        .from("posts")
+        .select("*")
+        .eq("id", blogId)
+        .single();
+  
+      if (data) {
+        setForm({
+          title: data.title,
+          image: data.image,
+          category: data.category,
+          content: data.content,
+        });
+      }
+    };
+  
+    fetchBlog();
   }, [blogId]);
+  
 
   useEffect(() => {
     if (!blogId) {
@@ -75,6 +101,44 @@ export default function BlogForm({ blogId }) {
   };
   
 
+  // const submitHandler = async (e) => {
+  //   e.preventDefault();
+  
+  //   if (!validateForm()) return;
+  
+  //   setSaving(true);
+  
+  //   // ✅ DEFINE PAYLOAD (THIS WAS MISSING)
+  //   const payload = {
+  //     title: form.title,
+  //     image: form.image,
+  //     category: form.category,
+  //     content: form.content,
+  //   };
+  
+  //   try {
+  //     if (blogId) {
+  //       // UPDATE
+  //       await api.put(`/posts/${Number(blogId)}`, {
+  //         ...payload,
+  //         id: Number(blogId),
+  //       });
+  //     } else {
+  //       // CREATE (🚨 DO NOT SEND ID)
+  //       await api.post("/posts", payload);
+  //     }
+  
+  //     setToast(blogId ? "Blog Updated" : "Blog Added");
+  
+  //     setTimeout(() => {
+  //       router.push("/");
+  //     }, 800);
+  //   } finally {
+  //     setSaving(false);
+  //   }
+  // };
+  
+  
   const submitHandler = async (e) => {
     e.preventDefault();
   
@@ -82,24 +146,28 @@ export default function BlogForm({ blogId }) {
   
     setSaving(true);
   
-    // ✅ DEFINE PAYLOAD (THIS WAS MISSING)
-    const payload = {
-      title: form.title,
-      image: form.image,
-      category: form.category,
-      content: form.content,
-    };
-  
     try {
       if (blogId) {
         // UPDATE
-        await api.put(`/posts/${Number(blogId)}`, {
-          ...payload,
-          id: Number(blogId),
-        });
+        await supabase
+          .from("posts")
+          .update({
+            title: form.title,
+            image: form.image,
+            category: form.category,
+            content: form.content,
+          })
+          .eq("id", blogId);
       } else {
-        // CREATE (🚨 DO NOT SEND ID)
-        await api.post("/posts", payload);
+        // CREATE
+        await supabase.from("posts").insert([
+          {
+            title: form.title,
+            image: form.image,
+            category: form.category,
+            content: form.content,
+          },
+        ]);
       }
   
       setToast(blogId ? "Blog Updated" : "Blog Added");
@@ -111,7 +179,6 @@ export default function BlogForm({ blogId }) {
       setSaving(false);
     }
   };
-  
   
   
   

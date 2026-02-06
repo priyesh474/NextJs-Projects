@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import styles from "./DarkModeToggle.module.css";
 
 export default function DarkModeToggle() {
-  // ✅ Read localStorage ONLY once (safe)
+  // ✅ State derived during render (React-approved)
   const [dark, setDark] = useState(() => {
     if (typeof window === "undefined") return false;
     return localStorage.getItem("theme") === "dark";
   });
 
-  // ✅ Apply class + persist
+  // ✅ Effects ONLY sync external systems
   useEffect(() => {
     document.body.classList.toggle("dark", dark);
     localStorage.setItem("theme", dark ? "dark" : "light");
@@ -19,8 +19,9 @@ export default function DarkModeToggle() {
   return (
     <button
       className={styles.btn}
-      onClick={() => setDark((prev) => !prev)}
+      onClick={() => setDark(prev => !prev)}
       aria-label="Toggle dark mode"
+      suppressHydrationWarning
     >
       {dark ? "☀️" : "🌙"}
     </button>

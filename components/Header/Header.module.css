@@ -103,18 +103,20 @@ body.dark .navLink::before {
 @media (max-width: 768px) {
   .headerContent {
     padding: 1rem 1.25rem;
+    border-bottom: 1px solid #cccccc78;
   }
 
   .logo {
-    font-size: 1.5rem;
+    font-size: 1.375rem;
   }
 
   .navLink {
-    padding: 0.5rem 1rem;
+    padding: 5px;
     font-size: 0.875rem;
   }
 
   .nav {
-    gap: 0.25rem;
+    gap: 10px;
   }
+
 }

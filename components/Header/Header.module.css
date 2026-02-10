@@ -9,8 +9,9 @@
 }
 
 body.dark .header {
-  border-bottom-color: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  border-bottom-color: rgb(255 255 255 / 19%);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 44%);
+  background: #2a2a2a;
 }
 
 .headerContent {

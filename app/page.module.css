@@ -147,7 +147,7 @@ body.dark .pill:hover:not(.pillActive) {
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 12px;
   padding: 8px 10px 8px 14px;
-  min-width: 260px;
+  min-width: 97.7%;
   transition: all 0.2s ease;
 }
 
@@ -234,5 +234,6 @@ body.dark .searchBar {
   .searchBar {
     width: 100%;
     max-width: -webkit-fill-available;
+    min-width: 88%;
   }
 }

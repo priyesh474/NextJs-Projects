@@ -27,6 +27,11 @@ body.dark .card {
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
 }
 
+:global(body.dark) .card {
+  border: 1px solid #cccccc5e;
+}
+
+
 .imageWrap {
   position: relative;
   width: 100%;

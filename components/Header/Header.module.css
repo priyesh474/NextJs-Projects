@@ -8,7 +8,7 @@
   transition: all 0.3s ease;
 }
 
-body.dark .header {
+:global(body.dark) .header {
   border-bottom-color: rgb(255 255 255 / 19%);
   box-shadow: 0 2px 8px rgb(0 0 0 / 44%);
   background: #2a2a2a;
@@ -93,9 +93,13 @@ body.dark .logo {
   transform: translateY(-1px);
 }
 
-body.dark .navLink:hover {
-  color: #a78bfa;
+:global(body.dark) .navLink:hover {
+  color: #ffffff;
 }
+
+/* :global(body.dark) .navLink::before {
+  background: #667eea;
+} */
 
 body.dark .navLink::before {
   background: rgba(167, 139, 250, 0.15);

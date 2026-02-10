@@ -49,10 +49,13 @@ body.dark .search-bar {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0;
 }
 
+
+
 body.dark .loading-fixed {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(158, 158, 158, 0.8);
 }
 body.dark input{
 color: #000 !important;

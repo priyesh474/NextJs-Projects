@@ -2,10 +2,12 @@
   max-width: 920px;
   margin: 0 auto;
   padding: 24px 16px;
+  margin-top: 20px;
 }
-body.dark .page-module__W_2IOa__shell {
+
+:global(body.dark) .shell {
   border: 1px solid #cccccc5e;
-    border-radius: 10px;
+  border-radius: 10px;
 }
 
 .header {

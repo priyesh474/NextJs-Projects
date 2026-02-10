@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
-// import api from "../../../services/api";
 import styles from "./page.module.css";
 import { supabase } from "@/lib/supabase";
 

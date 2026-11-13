@@ -1,6 +1,6 @@
 "use client";
 
-import BlogForm from "../../components/BlogForm/BlogForm";
+import BlogForm from "@/components/blog/BlogForm";
 import { useSearchParams } from "next/navigation";
 
 export default function AddEditBlog() {

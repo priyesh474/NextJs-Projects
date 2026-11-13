@@ -18,7 +18,23 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Typography uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) with Playfair Display for headings and Lora for body copy.
+
+## Project structure
+
+```
+app/                      Next.js App Router pages and layouts
+  blog/[id]/              Article detail page
+  add-edit-blog/          Create / edit form page
+components/
+  blog/                   Blog feature components (card, form)
+  layout/                 App chrome (header, footer)
+  ui/                     Reusable UI (toast, pagination, theme toggle)
+lib/                      Shared client and constants
+public/                   Static assets
+```
+
+Each component keeps its CSS module next to it. Theme colors, borders, and typography live as CSS variables in `app/globals.css`.
 
 ## Learn More
 

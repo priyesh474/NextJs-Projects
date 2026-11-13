@@ -1,0 +1,124 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-strong);
+  box-shadow: var(--shadow-2);
+}
+
+.imageWrap {
+  position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: var(--surface-alt);
+  border-bottom: 1px solid var(--border);
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.card:hover .image {
+  transform: scale(1.03);
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+  padding: 18px 20px 0;
+}
+
+.category {
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.title {
+  margin: 0;
+  font-size: 1.18rem;
+  line-height: 1.35;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: auto;
+  padding: 16px 20px 18px;
+}
+
+.actions > * {
+  position: relative;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: var(--font-body), Georgia, serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.actions > * + * {
+  padding-left: 15px;
+}
+
+.actions > * + *::before {
+  content: "·";
+  position: absolute;
+  left: 0;
+  color: var(--border-strong);
+}
+
+.actions > *:hover {
+  color: var(--accent);
+}
+
+.actions > .dangerBtn:hover {
+  color: var(--danger);
+}
+
+/* Inline delete confirmation */
+
+.actionsConfirm {
+  gap: 12px;
+}
+
+.actionsConfirm > * + * {
+  padding-left: 0;
+}
+
+.actionsConfirm > *::before {
+  display: none;
+}
+
+.confirmText {
+  color: var(--danger);
+  cursor: default;
+}
+
+.confirmBtn {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+.confirmBtn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}

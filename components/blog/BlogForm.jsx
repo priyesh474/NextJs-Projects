@@ -1,18 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Toast from "../Toast/Toast";
 import { useRouter } from "next/navigation";
-import styles from "./BlogForm.module.css";
+import Toast from "@/components/ui/Toast";
 import { supabase } from "@/lib/supabase";
-
+import styles from "./BlogForm.module.css";
 
 export default function BlogForm({ blogId }) {
   const router = useRouter();
-  const [form, setForm] = useState({ title: "", image: "", category: "", content: "",});
+  const [form, setForm] = useState({ title: "", image: "", category: "", content: "" });
 
   const [toast, setToast] = useState("");
-  
+
   const clearToast = () => {
     setToast("");
   };
@@ -21,17 +20,16 @@ export default function BlogForm({ blogId }) {
   const [localPreview, setLocalPreview] = useState("");
   const [errors, setErrors] = useState({});
 
-
   useEffect(() => {
     if (!blogId) return;
-  
+
     const fetchBlog = async () => {
       const { data } = await supabase
         .from("posts")
         .select("*")
         .eq("id", blogId)
         .single();
-  
+
       if (data) {
         setForm({
           title: data.title,
@@ -41,10 +39,9 @@ export default function BlogForm({ blogId }) {
         });
       }
     };
-  
+
     fetchBlog();
   }, [blogId]);
-  
 
   useEffect(() => {
     if (!blogId) {
@@ -58,7 +55,6 @@ export default function BlogForm({ blogId }) {
       setToast("");
     }
   }, [blogId]);
-  
 
   useEffect(() => {
     return () => {
@@ -68,41 +64,38 @@ export default function BlogForm({ blogId }) {
 
   const validateForm = () => {
     const newErrors = {};
-  
+
     if (!form.title.trim()) {
       newErrors.title = "Title is required";
     } else if (form.title.trim().length < 5) {
       newErrors.title = "Title must be at least 5 characters";
     }
-  
+
     if (!form.category.trim()) {
       newErrors.category = "Category is required";
     }
-  
+
     if (!form.content.trim()) {
       newErrors.content = "Content is required";
     } else if (form.content.trim().length < 20) {
       newErrors.content = "Content must be at least 20 characters";
     }
-  
+
     if (!blogId && !form.image) {
       newErrors.image = "Cover image is required";
     }
-  
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-  
 
-  
-  
   const submitHandler = async (e) => {
     e.preventDefault();
-  
+
     if (!validateForm()) return;
-  
+
     setSaving(true);
-  
+
     try {
       if (blogId) {
         // UPDATE
@@ -126,9 +119,9 @@ export default function BlogForm({ blogId }) {
           },
         ]);
       }
-  
+
       setToast(blogId ? "Blog Updated" : "Blog Added");
-  
+
       setTimeout(() => {
         router.push("/");
       }, 800);
@@ -136,39 +129,36 @@ export default function BlogForm({ blogId }) {
       setSaving(false);
     }
   };
-  
-  
-  
 
   const uploadLocalImage = async (file) => {
     if (!file) return;
-  
+
     setUploading(true);
     setToast("");
-  
+
     const previewUrl = URL.createObjectURL(file);
     setLocalPreview(previewUrl);
-  
+
     try {
       const fileExt = file.name.split(".").pop();
       const fileName = `${Date.now()}.${fileExt}`;
       const filePath = `covers/${fileName}`;
-  
+
       const { error: uploadError } = await supabase.storage
         .from("blog-images")
         .upload(filePath, file);
-  
+
       if (uploadError) throw uploadError;
-  
+
       const { data } = supabase.storage
         .from("blog-images")
         .getPublicUrl(filePath);
-  
+
       setForm((prev) => ({
         ...prev,
         image: data.publicUrl,
       }));
-  
+
       setToast("Image uploaded successfully");
     } catch (err) {
       console.error(err);
@@ -178,23 +168,32 @@ export default function BlogForm({ blogId }) {
       setUploading(false);
     }
   };
-  
 
   return (
     <>
       <div className={styles.shell}>
         <div className={styles.header}>
           <div>
-            <h2 className={styles.title}>{blogId ? "Edit blog" : "Create a new blog"}</h2>
-            <p className={styles.subtitle}>Add a cover image, category and content.</p>
+            <span className={styles.eyebrow}>
+              {blogId ? "Editing entry" : "New entry"}
+            </span>
+            <h2 className={styles.title}>
+              {blogId ? "Edit blog" : "Create a new blog"}
+            </h2>
+            <p className={styles.subtitle}>
+              Add a cover image, category and content.
+            </p>
           </div>
         </div>
 
         <form className={styles.form} onSubmit={submitHandler}>
           <div className={styles.grid}>
             <div className={styles.field}>
-              <label className={styles.label}>Title</label>
+              <label className={styles.label} htmlFor="blog-title">
+                Title
+              </label>
               <input
+                id="blog-title"
                 className={styles.input}
                 value={form.title}
                 onChange={(e) => {
@@ -203,12 +202,14 @@ export default function BlogForm({ blogId }) {
                 }}
               />
               {errors.title && <p className={styles.error}>{errors.title}</p>}
-
             </div>
 
             <div className={styles.field}>
-              <label className={styles.label}>Category</label>
+              <label className={styles.label} htmlFor="blog-category">
+                Category
+              </label>
               <input
+                id="blog-category"
                 className={styles.input}
                 value={form.category}
                 onChange={(e) => {
@@ -216,8 +217,9 @@ export default function BlogForm({ blogId }) {
                   setErrors((prev) => ({ ...prev, category: "" }));
                 }}
               />
-              {errors.category && <p className={styles.error}>{errors.category}</p>}
-
+              {errors.category && (
+                <p className={styles.error}>{errors.category}</p>
+              )}
             </div>
           </div>
 
@@ -226,7 +228,7 @@ export default function BlogForm({ blogId }) {
               <div>
                 <div className={styles.label}>Cover image</div>
                 <p className={styles.help}>
-                  Upload from your computer (saved locally to `public/uploads/...`).
+                  Upload a JPG or PNG — the file is stored in Supabase Storage.
                 </p>
               </div>
 
@@ -262,8 +264,11 @@ export default function BlogForm({ blogId }) {
           </div>
 
           <div className={styles.field}>
-            <label className={styles.label}>Content</label>
+            <label className={styles.label} htmlFor="blog-content">
+              Content
+            </label>
             <textarea
+              id="blog-content"
               className={styles.textarea}
               value={form.content}
               onChange={(e) => {
@@ -272,7 +277,6 @@ export default function BlogForm({ blogId }) {
               }}
             />
             {errors.content && <p className={styles.error}>{errors.content}</p>}
-
           </div>
 
           <div className={styles.actions}>
@@ -284,7 +288,7 @@ export default function BlogForm({ blogId }) {
               {saving ? "Saving..." : blogId ? "Update blog" : "Publish blog"}
             </button>
           </div>
-      </form>
+        </form>
       </div>
 
       {toast && <Toast message={toast} onClose={clearToast} />}

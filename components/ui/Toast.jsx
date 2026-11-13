@@ -3,7 +3,13 @@
 import { useEffect, useState, useCallback, useRef, startTransition } from "react";
 import styles from "./Toast.module.css";
 
-export default function Toast({ message, onClose, duration = 4000 }) {
+export default function Toast({
+  message,
+  onClose,
+  actionLabel,
+  onAction,
+  duration = 4000,
+}) {
   const [isExiting, setIsExiting] = useState(false);
   const timerRef = useRef(null);
   const prevMessageRef = useRef(null);
@@ -28,7 +34,7 @@ export default function Toast({ message, onClose, duration = 4000 }) {
         });
       }
       prevMessageRef.current = message;
-      
+
       if (timerRef.current) {
         clearTimeout(timerRef.current);
       }
@@ -61,32 +67,33 @@ export default function Toast({ message, onClose, duration = 4000 }) {
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth={2}
+            strokeWidth={1.8}
             d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
         <span className={styles.message}>{message}</span>
+        {actionLabel && onAction && (
+          <button type="button" className={styles.actionBtn} onClick={onAction}>
+            {actionLabel}
+          </button>
+        )}
       </div>
       <button
+        type="button"
         className={styles.closeBtn}
         onClick={handleClose}
         aria-label="Close notification"
       >
-        <svg
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path
             strokeLinecap="round"
             strokeLinejoin="round"
-            strokeWidth={2}
+            strokeWidth={1.8}
             d="M6 18L18 6M6 6l12 12"
           />
         </svg>

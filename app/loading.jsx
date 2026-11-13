@@ -1,9 +1,11 @@
-import React from 'react'
+import styles from "./loading.module.css";
 
-const loading = () => {
+export default function Loading() {
   return (
-    <h2 className='loading-fixed'>loading...</h2>
-  )
+    <div className={styles.wrap} role="status" aria-live="polite">
+      <span className={styles.rule} aria-hidden="true" />
+      <span className={styles.text}>Loading</span>
+      <span className={styles.rule} aria-hidden="true" />
+    </div>
+  );
 }
-
-export default loading

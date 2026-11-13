@@ -3,35 +3,33 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
-import styles from "./page.module.css";
 import { supabase } from "@/lib/supabase";
+import styles from "./page.module.css";
 
 export default function BlogDetail() {
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
 
-
   useEffect(() => {
     if (!id) return;
-  
+
     const fetchBlog = async () => {
       const { data, error } = await supabase
         .from("posts")
         .select("*")
         .eq("id", id)
         .single();
-  
+
       if (!error) {
         setBlog(data);
       }
-  
+
       setLoading(false);
     };
-  
+
     fetchBlog();
   }, [id]);
-  
 
   const imageSrc =
     blog?.image &&
@@ -41,13 +39,24 @@ export default function BlogDetail() {
       ? blog.image
       : "/blog-default.png";
 
+  const published = blog?.created_at
+    ? new Date(blog.created_at).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    : null;
+
   if (loading) {
     return (
       <div className={styles.shell}>
         <div className={styles.card}>
-          <div className={`${styles.skeletonBase} ${styles.skeletonImg}`} />
-          <div className={`${styles.skeletonBase} ${styles.skeletonTitle}`} />
-          <div className={`${styles.skeletonBase} ${styles.skeletonText}`} />
+          <div className={`${styles.skeleton} ${styles.skeletonImg}`} />
+          <div className={styles.body}>
+            <div className={`${styles.skeleton} ${styles.skeletonTitle}`} />
+            <div className={`${styles.skeleton} ${styles.skeletonText}`} />
+            <div className={`${styles.skeleton} ${styles.skeletonTextShort}`} />
+          </div>
         </div>
       </div>
     );
@@ -57,10 +66,12 @@ export default function BlogDetail() {
     return (
       <div className={styles.shell}>
         <div className={styles.card}>
-          <h2 style={{ margin: 0, color: "var(--text)" }}>Blog not found</h2>
-          <p style={{ opacity: 0.8, color: "var(--text)" }}>
-            Please go back and try another post.
-          </p>
+          <div className={styles.body}>
+            <h2 className={styles.notFoundTitle}>Blog not found</h2>
+            <p className={styles.notFoundText}>
+              Please go back and try another post.
+            </p>
+          </div>
         </div>
       </div>
     );
@@ -74,13 +85,15 @@ export default function BlogDetail() {
             src={imageSrc}
             alt={blog.title}
             fill
+            sizes="(max-width: 820px) 100vw, 820px"
             style={{ objectFit: "cover" }}
-            sizes="800px"
           />
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+
+        <div className={styles.body}>
           <div className={styles.badge}>{blog.category || "Uncategorized"}</div>
           <h1 className={styles.title}>{blog.title}</h1>
+          {published && <p className={styles.meta}>{published}</p>}
           <p className={styles.content}>{blog.content}</p>
         </div>
       </article>

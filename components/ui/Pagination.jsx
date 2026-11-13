@@ -2,19 +2,19 @@
 
 import styles from "./Pagination.module.css";
 
-export default function Pagination({ 
-  currentPage, 
-  totalPages, 
+export default function Pagination({
+  currentPage,
+  totalPages,
   onPageChange,
   itemsPerPage = 6,
-  totalItems 
+  totalItems,
 }) {
   if (!totalPages || totalPages <= 1) return null;
 
   const getPageNumbers = () => {
     const pages = [];
     const maxVisible = 5;
-    
+
     if (totalPages <= maxVisible) {
       // Show all pages if total is less than max visible
       for (let i = 1; i <= totalPages; i++) {
@@ -23,7 +23,7 @@ export default function Pagination({
     } else {
       // Always show first page
       pages.push(1);
-      
+
       if (currentPage <= 3) {
         // Show first 5 pages
         for (let i = 2; i <= 5; i++) {
@@ -40,13 +40,13 @@ export default function Pagination({
         pages.push(currentPage);
         pages.push(currentPage + 1);
       }
-      
+
       // Always show last page if not already included
       if (!pages.includes(totalPages)) {
         pages.push(totalPages);
       }
     }
-    
+
     return pages;
   };
 
@@ -55,13 +55,14 @@ export default function Pagination({
   const endItem = Math.min(currentPage * itemsPerPage, totalItems);
 
   return (
-    <div className={styles.pagination}>
+    <nav className={styles.pagination} aria-label="Blog pagination">
       <div className={styles.info}>
-        Showing {startItem}-{endItem} of {totalItems} results
+        Showing {startItem}–{endItem} of {totalItems} entries
       </div>
-      
+
       <div className={styles.controls}>
         <button
+          type="button"
           className={styles.navButton}
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
@@ -71,12 +72,12 @@ export default function Pagination({
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
           >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth={2}
+              strokeWidth={1.8}
               d="M15 19l-7-7 7-7"
             />
           </svg>
@@ -85,14 +86,16 @@ export default function Pagination({
         <div className={styles.pageNumbers}>
           {pageNumbers.map((pageNum, index) => {
             // Add ellipsis before if there's a gap
-            const showEllipsisBefore = index > 0 && pageNum - pageNumbers[index - 1] > 1;
-            
+            const showEllipsisBefore =
+              index > 0 && pageNum - pageNumbers[index - 1] > 1;
+
             return (
               <div key={pageNum} className={styles.pageGroup}>
                 {showEllipsisBefore && (
-                  <span className={styles.ellipsis}>...</span>
+                  <span className={styles.ellipsis}>…</span>
                 )}
                 <button
+                  type="button"
                   className={`${styles.pageButton} ${
                     currentPage === pageNum ? styles.active : ""
                   }`}
@@ -108,6 +111,7 @@ export default function Pagination({
         </div>
 
         <button
+          type="button"
           className={styles.navButton}
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
@@ -117,17 +121,17 @@ export default function Pagination({
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
           >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth={2}
+              strokeWidth={1.8}
               d="M9 5l7 7-7 7"
             />
           </svg>
         </button>
       </div>
-    </div>
+    </nav>
   );
 }
